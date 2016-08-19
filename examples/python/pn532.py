@@ -76,7 +76,7 @@ while (1):
 		print "UID: ",
 		for i in range(uidSize.__getitem__(0)):
 			print "%02x" % uid.__getitem__(i),
-		print
+		print "Hi Andrew"
 		print "SAK: %02x" % myNFC.getSAK()
 		print "ATQA: %04x" % myNFC.getATQA()
                 print
