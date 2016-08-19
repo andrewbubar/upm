@@ -24,12 +24,11 @@
 import time, sys, signal, atexit
 import pyupm_pn532 as upmPn532
 import sqlite3 as lite
-import mraa
 
 con = lite.connect('makerspace.db')
 
 people = (
-	('600d20e8016', 'Andrew Bubar', 'Y', 'Y', 'Y'),
+	("9621023222", 'Andrew Bubar', 'Y', 'Y', 'Y'),
         (2, 'Chris Ross', 'Y', 'Y', 'Y'),
         (3, 'Hunter Pickett', 'N', 'N', 'N'),
         (4, 'Ashish Datta', 'Y','Y','Y')
@@ -39,7 +38,7 @@ with con:
 	cur = con.cursor()
 	
 	cur.execute("DROP TABLE IF EXISTS PERMISSIONS")
-	cur.execute("CREATE TABLE PERMISSIONS(ID INT, Name TEXT, Laser TEXT, Printer TEXT, Solder TEXT)")
+	cur.execute("CREATE TABLE PERMISSIONS(ID TEXT, Name TEXT, Laser TEXT, Printer TEXT, Solder TEXT)")
     	cur.executemany("INSERT INTO Permissions VALUES(?,?,?,?,?)",people)
 
 con.commit()
@@ -57,6 +56,42 @@ def SIGINTHandler(signum, frame):
 def exitHandler():
 	print "Exiting"
 	sys.exit(0)
+
+def checkTable(rfidNumber):
+    
+        if len(rfidNumber) > 0:
+            cur = con.cursor()
+            cur.execute("SELECT * FROM PERMISSIONS where ID = ?", [rfidNumber])
+            result = cur.fetchone()
+            try:
+                if (result[0] == rfid_data):
+                    laser = result[2]
+                    printer = result[3]
+                    solder = result[4]
+                    print("Hello", [result[1]],"!")
+                    return name, laser, printer, solder
+            except TypeError:
+                print ("Sorry RFID is not registered")
+def laser(laser):
+    
+        if laser == 'Y' or laser == 'y':
+            # GRIO.output(TRANSISTOR, True)
+            #blueLED.write(0)
+            #greenLED.write(1)
+            #time.sleep(2)
+            print ("Access granted")
+            #greenLED.write(0)
+            #blueLED.write(1)
+            #powerRelay.write(1)
+        else:
+            # GRIO.output(TRANSISTOR, True)
+            #blueLED.write(0)
+            #redLED.write(1)
+            #time.sleep(2)
+            print ("You do not have access")
+            #redLED.write(0)
+            #blueLED.write(1)
+            # keep machine off
 
 # Register exit handlers
 atexit.register(exitHandler)
@@ -96,13 +131,12 @@ while (1):
 		print "UID: ",
 		for i in range(uidSize.__getitem__(0)):
 			print "%02x" % uid.__getitem__(i),
-			rfid_data[i] = uid.__getitem__(i)
-		for i < 4
-			print rfid_data(i)
-		print 
-		print "SAK: %02x" % myNFC.getSAK()
-		print "ATQA: %04x" % myNFC.getATQA()
-                print
+			rfidData.insert(i,uid.__getitem__(i))
+		rfidNumber = ''
+		for i in range(len(rfidNumber)):
+			rfidNumber = str(rfidNumber) + str(rfidData[i])
+		name, laser, printer, solder = checkTable(rfidNumber)
+		laser(laser)
 		time.sleep(1)
 	else:
 		print "Waiting for a card...\n"
