@@ -23,7 +23,27 @@
 
 import time, sys, signal, atexit
 import pyupm_pn532 as upmPn532
+import sqlite3 as lite
+import mraa
 
+con = lite.connect('makerspace.db')
+
+people = (
+	('600d20e8016', 'Andrew Bubar', 'Y', 'Y', 'Y'),
+        (2, 'Chris Ross', 'Y', 'Y', 'Y'),
+        (3, 'Hunter Pickett', 'N', 'N', 'N'),
+        (4, 'Ashish Datta', 'Y','Y','Y')
+        )
+
+with con:
+	cur = con.cursor()
+	
+	cur.execute("DROP TABLE IF EXISTS PERMISSIONS")
+	cur.execute("CREATE TABLE PERMISSIONS(ID INT, Name TEXT, Laser TEXT, Printer TEXT, Solder TEXT)")
+    	cur.executemany("INSERT INTO Permissions VALUES(?,?,?,?,?)",people)
+
+con.commit()
+con.close()
 # Instantiate an PN532 on I2C bus 0 (default) using gpio 3 for the
 # IRQ, and gpio 2 for the reset pin.
 myNFC = upmPn532.PN532(3, 2)
@@ -76,7 +96,10 @@ while (1):
 		print "UID: ",
 		for i in range(uidSize.__getitem__(0)):
 			print "%02x" % uid.__getitem__(i),
-		print "Hi Andrew"
+			rfid_data[i] = uid.__getitem__(i)
+		for i < 4
+			print rfid_data(i)
+		print 
 		print "SAK: %02x" % myNFC.getSAK()
 		print "ATQA: %04x" % myNFC.getATQA()
                 print
