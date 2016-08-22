@@ -25,6 +25,18 @@ import time, sys, signal, atexit
 import pyupm_pn532 as upmPn532
 import sqlite3 as lite
 
+GREEN_LED = 4
+BLUE_LED = 5
+RED_LED = 6
+
+greenLED = mraa.Gpio(GREEN_LED)
+blueLED = mraa.Gpio(BLUE_LED)
+redLED = mraa.Gpio(RED_LED)
+
+greenLED.dir(mraa.DIR_OUT)
+blueLED.dir(mraa.DIR_OUT)
+redLED.dir(mraa.DIR_OUT)
+
 con = lite.connect('makerspace.db')
 
 people = (
