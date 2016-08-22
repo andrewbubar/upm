@@ -6,9 +6,9 @@ import pyupm_pn532 as upmPn532
 import sqlite3 as lite
 import pyupm_grove as grove
 
-GREEN_LED = 4
-BLUE_LED = 5
-RED_LED = 6
+BLUE_LED = 4
+RED_LED = 5
+GREEN_LED = 6
 
 greenLED = grove.GroveLed(GREEN_LED)
 blueLED = grove.GroveLed(BLUE_LED)
@@ -98,8 +98,6 @@ while (1):
                                       uid, uidSize, 2000)):
 		# found a card
 		rfidData = []
-		print "Found a card: UID len", uidSize.__getitem__(0)
-		print "UID: ",
 		for i in range(uidSize.__getitem__(0)):
 			print "%02x" % uid.__getitem__(i),
 			rfidData.insert(i,uid.__getitem__(i))
