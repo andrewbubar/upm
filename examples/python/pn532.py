@@ -30,7 +30,7 @@ con = lite.connect('makerspace.db')
 people = (
 	("9621023222", 'Andrew Bubar', 'Y', 'Y', 'Y'),
         (2, 'Chris Ross', 'Y', 'Y', 'Y'),
-        (3, 'Hunter Pickett', 'N', 'N', 'N'),
+        ("1624434710", 'Hunter Pickett', 'N', 'N', 'N'),
         (4, 'Ashish Datta', 'Y','Y','Y')
         )
 
@@ -42,7 +42,7 @@ with con:
     	cur.executemany("INSERT INTO Permissions VALUES(?,?,?,?,?)",people)
 
 con.commit()
-con.close()
+#con.close()
 # Instantiate an PN532 on I2C bus 0 (default) using gpio 3 for the
 # IRQ, and gpio 2 for the reset pin.
 myNFC = upmPn532.PN532(3, 2)
@@ -72,7 +72,7 @@ def checkTable(rfidNumber):
                     return name, laser, printer, solder
             except TypeError:
                 print ("Sorry RFID is not registered")
-def laser(laser):
+def cutter(laser):
     
         if laser == 'Y' or laser == 'y':
             # GRIO.output(TRANSISTOR, True)
@@ -136,7 +136,7 @@ while (1):
 		for i in range(len(rfidNumber)):
 			rfidNumber = str(rfidNumber) + str(rfidData[i])
 		name, laser, printer, solder = checkTable(rfidNumber)
-		laser(laser)
+		cutter(laser)
 		time.sleep(1)
 	else:
 		print "Waiting for a card...\n"
