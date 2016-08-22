@@ -53,13 +53,13 @@ def cutter(laser):
         if laser == 'Y' or laser == 'y':
             # GRIO.output(TRANSISTOR, True)
             greenLED.on()
-            time.sleep(2)
             print ("Access granted")
+            time.sleep(2)
             greenLED.off()
         else:
             redLED.on()
-            time.sleep(2)
             print ("You do not have access")
+            time.sleep(2)            
             redLED.off()
             # keep machine off
 
