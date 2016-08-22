@@ -30,7 +30,7 @@ con = lite.connect('makerspace.db')
 people = (
 	("9621023222", 'Andrew Bubar', 'Y', 'Y', 'Y'),
         (2, 'Chris Ross', 'Y', 'Y', 'Y'),
-        ("1624434710", 'Hunter Pickett', 'N', 'N', 'N'),
+        ("321143517", 'Hunter Pickett', 'N', 'N', 'N'),
         (4, 'Ashish Datta', 'Y','Y','Y')
         )
 
@@ -64,11 +64,11 @@ def checkTable(rfidNumber):
             cur.execute("SELECT * FROM PERMISSIONS where ID = ?", [rfidNumber])
             result = cur.fetchone()
             try:
-                if (result[0] == rfid_data):
+                if (result[0] == rfidNumber):
+                    name = result[1]
                     laser = result[2]
                     printer = result[3]
                     solder = result[4]
-                    print("Hello", [result[1]],"!")
                     return name, laser, printer, solder
             except TypeError:
                 print ("Sorry RFID is not registered")
@@ -127,13 +127,14 @@ while (1):
 	if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
                                       uid, uidSize, 2000)):
 		# found a card
+		rfidData = []
 		print "Found a card: UID len", uidSize.__getitem__(0)
 		print "UID: ",
 		for i in range(uidSize.__getitem__(0)):
 			print "%02x" % uid.__getitem__(i),
 			rfidData.insert(i,uid.__getitem__(i))
 		rfidNumber = ''
-		for i in range(len(rfidNumber)):
+		for i in range(len(rfidData)):
 			rfidNumber = str(rfidNumber) + str(rfidData[i])
 		name, laser, printer, solder = checkTable(rfidNumber)
 		cutter(laser)
