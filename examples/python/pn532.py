@@ -24,18 +24,15 @@
 import time, sys, signal, atexit
 import pyupm_pn532 as upmPn532
 import sqlite3 as lite
+import pyupm_grove as grove
 
 GREEN_LED = 4
 BLUE_LED = 5
 RED_LED = 6
 
-greenLED = mraa.Gpio(GREEN_LED)
-blueLED = mraa.Gpio(BLUE_LED)
-redLED = mraa.Gpio(RED_LED)
-
-greenLED.dir(mraa.DIR_OUT)
-blueLED.dir(mraa.DIR_OUT)
-redLED.dir(mraa.DIR_OUT)
+greenLED = grove.GroveLed(GREEN_LED)
+blueLED = grove.GroveLed(BLUE_LED)
+redLED = grove.GroveLed(RED_LED)
 
 con = lite.connect('makerspace.db')
 
@@ -54,7 +51,8 @@ with con:
     	cur.executemany("INSERT INTO Permissions VALUES(?,?,?,?,?)",people)
 
 con.commit()
-#con.close()
+
+blueLED.on()
 # Instantiate an PN532 on I2C bus 0 (default) using gpio 3 for the
 # IRQ, and gpio 2 for the reset pin.
 myNFC = upmPn532.PN532(3, 2)
@@ -82,7 +80,7 @@ def checkTable(rfidNumber):
                     laser = result[2]
                     printer = result[3]
                     solder = result[4]
-                    print ("Hello %s" %name)
+                    print ("Hello " + name + "!")
                     return name, laser, printer, solder
             except TypeError:
                 print ("Sorry RFID is not registered")
@@ -90,21 +88,15 @@ def cutter(laser):
     
         if laser == 'Y' or laser == 'y':
             # GRIO.output(TRANSISTOR, True)
-            #blueLED.write(0)
-            #greenLED.write(1)
-            #time.sleep(2)
+            greenLED.on()
+            time.sleep(2)
             print ("Access granted")
-            #greenLED.write(0)
-            #blueLED.write(1)
-            #powerRelay.write(1)
+            greenLED.off()
         else:
-            # GRIO.output(TRANSISTOR, True)
-            #blueLED.write(0)
-            #redLED.write(1)
-            #time.sleep(2)
+            redLED.on()
+            time.sleep(2)
             print ("You do not have access")
-            #redLED.write(0)
-            #blueLED.write(1)
+            redLED.off()
             # keep machine off
 
 # Register exit handlers
