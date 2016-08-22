@@ -36,22 +36,6 @@ redLED = grove.GroveLed(RED_LED)
 
 con = lite.connect('makerspace.db')
 
-people = (
-	("9621023222", 'Andrew Bubar', 'Y', 'Y', 'Y'),
-        (2, 'Chris Ross', 'Y', 'Y', 'Y'),
-        ("321143517", 'Hunter Pickett', 'N', 'N', 'N'),
-        (4, 'Ashish Datta', 'Y','Y','Y')
-        )
-
-with con:
-	cur = con.cursor()
-	
-	cur.execute("DROP TABLE IF EXISTS PERMISSIONS")
-	cur.execute("CREATE TABLE PERMISSIONS(ID TEXT, Name TEXT, Laser TEXT, Printer TEXT, Solder TEXT)")
-    	cur.executemany("INSERT INTO Permissions VALUES(?,?,?,?,?)",people)
-
-con.commit()
-
 blueLED.on()
 # Instantiate an PN532 on I2C bus 0 (default) using gpio 3 for the
 # IRQ, and gpio 2 for the reset pin.
