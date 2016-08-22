@@ -78,9 +78,11 @@ def checkTable(rfidNumber):
             try:
                 if (result[0] == rfidNumber):
                     name = result[1]
+                    name = name.encode("utf-8")
                     laser = result[2]
                     printer = result[3]
                     solder = result[4]
+                    print ("Hello %s" %name)
                     return name, laser, printer, solder
             except TypeError:
                 print ("Sorry RFID is not registered")
