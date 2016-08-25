@@ -65,7 +65,6 @@ def cutter(laser):
     
         if laser == 'Y' or laser == 'y':
             greenLED.on()
-            #print ("Access granted")
             lcdMessage = "Access Granted"
             myLCD.setCursor(0,0)
             myLCD.write(lcdMessage)
@@ -74,7 +73,6 @@ def cutter(laser):
             greenLED.off()
         else:
             redLED.on()
-            #print ("You do not have access")
             lcdMessage = "Access Denied"
             myLCD.setCursor(0,0)
             myLCD.write(lcdMessage)
