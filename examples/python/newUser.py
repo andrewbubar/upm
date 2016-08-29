@@ -46,6 +46,8 @@ myNFC.SAMConfig()
 uidSize = upmPn532.uint8Array(0)
 uid = upmPn532.uint8Array(7)
 
+cur = con.cursor()
+
 while (1):
 	for i in range(7):
 		uid.__setitem__(i, 0)
@@ -58,16 +60,20 @@ while (1):
 		rfidNumber = ''
 		for i in range(len(rfidData)):
 			rfidNumber = str(rfidNumber) + str(rfidData[i])
-      		name = raw_input('Enter the name: ')
-      		laser = raw_input('Laser Access? ')
-      		printer = raw_input('Printer Access? ')
-      		solder = raw_input('Solder Access? ')
-		params = (rfidNumber, name, laser, printer, solder)
-		cur = con.cursor()
-		cur.execute("INSERT INTO PERMISSIONS VALUES(?, ?, ?, ?, ?)", params)
-		con.commit()
-		con.close()
-		blueLED.off()
-		sys.exit(0)
+		cur.execute("SELECT * FROM PERMISSIONS where ID = ?", [rfidNumber])
+		result = cur.fetchone()
+		if result is not None:
+			print("RFID is already registered")
+		else:
+      			name = raw_input('Enter the name: ')
+      			laser = raw_input('Laser Access? ')
+      			printer = raw_input('Printer Access? ')
+      			solder = raw_input('Solder Access? ')
+			params = (rfidNumber, name, laser, printer, solder)
+			cur.execute("INSERT INTO PERMISSIONS VALUES(?, ?, ?, ?, ?)", params)
+			con.commit()
+			con.close()
+			blueLED.off()
+			sys.exit(0)
 	else:
 		print "Waiting for a card...\n"
