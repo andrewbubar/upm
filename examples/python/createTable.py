@@ -5,9 +5,7 @@ con = lite.connect('makerspace.db')
 
 people = (
 	("9621023222", 'Andrew Bubar', 'Y', 'Y', 'Y'),
-        (2, 'Chris Ross', 'Y', 'Y', 'Y'),
         ("321143517", 'Hunter Pickett', 'N', 'N', 'N'),
-        (4, 'Ashish Datta', 'Y','Y','Y')
         )
 
 with con:
