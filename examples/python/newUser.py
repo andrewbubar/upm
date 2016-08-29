@@ -1,4 +1,4 @@
-import serial, time, sys
+import time, sys, signal, atexit
 import sqlite3 as lite
 import pyupm_pn532 as upmPn532
 import pyupm_grove as grove
