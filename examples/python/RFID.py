@@ -5,6 +5,7 @@ import time, sys, signal, atexit
 import pyupm_pn532 as upmPn532
 import sqlite3 as lite
 import pyupm_grove as grove
+import pyupm_i2clcd as lcd
 
 BLUE_LED = 4
 RED_LED = 5
