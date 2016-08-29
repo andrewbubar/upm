@@ -2,6 +2,7 @@ import serial, time, sys
 import sqlite3 as lite
 import pyupm_pn532 as upmPn532
 import pyupm_grove as grove
+import pyupm_i2clcd as lcd
 
 BLUE_LED = 4
 RED_LED = 5
@@ -57,16 +58,16 @@ while (1):
 		rfidNumber = ''
 		for i in range(len(rfidData)):
 			rfidNumber = str(rfidNumber) + str(rfidData[i])
-      name = ('Enter the name: ")
-      laser = ('Laser Access? ')
-      printer = ('Printer Access? ')
-      solder = ('Solder Access? ')
-			with con:
-			  cur = con.cursor()
-			  cur.execute("INSERT INTO PERMISSIONS VALUES(rfidNumber, name, laser, printer, solder)
-			con.commit()
-			con.close()
-			blueLED.off()
-			sys.exit(0)
+      		name = raw_input('Enter the name: ')
+      		laser = raw_input('Laser Access? ')
+      		printer = raw_input('Printer Access? ')
+      		solder = raw_input('Solder Access? ')
+		params = (rfidNumber, name, laser, printer, solder)
+		cur = con.cursor()
+		cur.execute("INSERT INTO PERMISSIONS VALUES(?, ?, ?, ?, ?)", params)
+		con.commit()
+		con.close()
+		blueLED.off()
+		sys.exit(0)
 	else:
 		print "Waiting for a card...\n"
