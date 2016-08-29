@@ -2,6 +2,7 @@ import serial, time, sys
 import sqlite3 as lite
 import pyupm_pn532 as upmPn532
 import pyupm_grove as grove
+import pyupm_i2clcd as lcd
 
 BLUE_LED = 4
 RED_LED = 5
@@ -61,20 +62,24 @@ while (1):
 			greenLED.on()
 			time.sleep(1)
 			greenLED.off()
-						cur = con.cursor()
-			sel = print("What would you like to update for this user?")
+			cur = con.cursor()
+			sel = raw_input("What would you like to update for this user?")
 			if sel == 'Name':
-			  str(name) = print("What is the new name?")
-			  cur.execute("UPDATE PERMISSIONS SET Name = name WHERE ID = rfidNumber")
+			  name = raw_input("What is the new name?")
+			  params = name, rfidNumber
+			  cur.execute("UPDATE PERMISSIONS SET Name = ? WHERE ID = ?", params)
 			if sel == 'Laser':
-			  str(laser) = print("Y or N for Laser Cutter?")
-			  cur.execute("UPDATE PERMISSIONS SET Laser = laser WHERE ID = rfidNumber")
+			  laser = raw_input("Y or N for Laser Cutter?")
+			  params = laser, rfidNumber
+			  cur.execute("UPDATE PERMISSIONS SET Laser = ? WHERE ID = ?", params)
 			if sel == 'Printer':
-			  str(printer) = print("Y or N for 3-D Printer?")
-			  cur.execute("UPDATE PERMISSIONS SET Printer = printer WHERE ID = rfidNumber")
+			  printer = raw_input("Y or N for 3-D Printer?")
+			  params = printer, rfidNumber
+			  cur.execute("UPDATE PERMISSIONS SET Printer = ? WHERE ID = ?", params)
 			if sel == 'Solder':
-			  str(solder) = print("Y or N for Soldering Machine?")
-			  cur.execute("UPDATE PERMISSIONS SET Solder = solder WHERE ID = rfidNumber")
+			  solder = raw_input("Y or N for Soldering Machine?")
+			  params = solder, rfidNumber
+			  cur.execute("UPDATE PERMISSIONS SET Solder = ? WHERE ID = ?", params)
 			con.commit()
 			con.close()
 			blueLED.off()
