@@ -123,8 +123,11 @@ while (1):
 		rfidNumber = ''
 		for i in range(len(rfidData)):
 			rfidNumber = str(rfidNumber) + str(rfidData[i])
-		name, laser, printer, solder = checkTable(rfidNumber)
-		cutter(laser)
-		time.sleep(1)
+		try:
+			name, laser, printer, solder = checkTable(rfidNumber)
+			cutter(laser)
+		except:
+			time.sleep(1)
+			continue
 	else:
 		print "Waiting for a card...\n"
