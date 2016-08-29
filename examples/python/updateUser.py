@@ -77,7 +77,7 @@ while (1):
 		  solder = raw_input("Y or N for Soldering Machine?")
 		  params = solder, rfidNumber
 		  cur.execute("UPDATE PERMISSIONS SET Solder = ? WHERE ID = ?", params)
-		  con.commit()
+		con.commit()
 		con.close()
 		blueLED.off()
 		sys.exit(0)
