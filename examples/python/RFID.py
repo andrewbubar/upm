@@ -137,4 +137,11 @@ while (1):
 			time.sleep(1)
 			continue
 	else:
-		print "Waiting for a card...\n"
+                lcdMessage = "Waiting for a"
+                lcdMessage2 = "card . . .")
+                myLCD.setCursor(0,0)
+                myLCD.write(lcdMessage)
+                myLCD.setCursor(0,1)
+                myLCD.write(lcdMessage2)
+                time.sleep(2)
+                myLCD.clear()
