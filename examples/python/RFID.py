@@ -50,18 +50,25 @@ def checkTable(rfidNumber):
                 if (result[0] == rfidNumber):
                     name = result[1]
                     name = name.encode("utf-8")
+                    first, last = name.split()
                     laser = result[2]
                     printer = result[3]
                     solder = result[4]
-                    lcdMessage = "Hello " + name + "!"
+                    lcdMessage = "Hello " + first + "!"
                     myLCD.setCursor(0,0)
                     myLCD.write(lcdMessage)
                     time.sleep(1)
                     myLCD.clear()
-                    #print ("Hello " + name + "!")
                     return name, laser, printer, solder
             except TypeError:
-                print ("Sorry RFID is not registered")
+                lcdMessage = "Sorry RFID is"
+                lcdMessage2 = "not registered")
+                myLCD.setCursor(0,0)
+                myLCD.write(lcdMessage)
+                myLCD.setCursor(0,1)
+                myLCD.write(lcdMessage2)
+                time.sleep(2)
+                myLCD.clear()
 def cutter(laser):
     
         if laser == 'Y' or laser == 'y':
