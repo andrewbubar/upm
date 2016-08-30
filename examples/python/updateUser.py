@@ -62,6 +62,7 @@ while (1):
 		cur = con.cursor()
 		cur.execute("SELECT * FROM PERMISSIONS where ID = ?", [rfidNumber])
 		result = cur.fetchone()
+		print ("This RFID is registered for: " + result[0])
 		if result is not None:
 			sel = raw_input("What would you like to update for this user?")
 			if sel == 'Name':
