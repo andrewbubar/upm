@@ -64,6 +64,16 @@ while (1):
 		result = cur.fetchone()
 		if result is not None:
 			print("RFID is already registered")
+			blueLED.off()
+			redLED.on()
+			myLCD.setCursor(0,0)
+			myLCD.write("RFID already")
+			myLCD.setCursor(0,1)
+			myLCD.write("registered")
+			time.sleep(1)
+			myLCD.clear()
+			blueLED.on()
+			continue
 		else:
       			name = raw_input('Enter the name: ')
       			laser = raw_input('Laser Access? ')
