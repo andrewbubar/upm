@@ -88,7 +88,7 @@ while (1):
 	else:
 		print "Waiting for a card...\n"
 		myLCD.setCursor(0,0)
-		lcdMessage("Waiting for")
+		lcdMessage = ("Waiting for")
 		myLCD.write(lcdMessage)
 		myLCD.setCursor(0,1)
 		lcdMessage2 = "a card . . ."
