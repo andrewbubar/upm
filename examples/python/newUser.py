@@ -63,12 +63,12 @@ while (1):
 		cur.execute("SELECT * FROM PERMISSIONS where ID = ?", [rfidNumber])
 		result = cur.fetchone()
 		if result is not None:
-			print("RFID is already registered")
+			#print("RFID is already registered")
 			blueLED.off()
 			redLED.on()
 			myLCD.setCursor(0,0)
 			myLCD.write("RFID already")
-			myLCD.setCursor(0,1)
+			myLCD.setCursor(1,0)
 			myLCD.write("registered")
 			time.sleep(1)
 			myLCD.clear()
@@ -86,11 +86,11 @@ while (1):
 			blueLED.off()
 			sys.exit(0)
 	else:
-		print "Waiting for a card...\n"
+		#print "Waiting for a card...\n"
 		myLCD.setCursor(0,0)
 		lcdMessage = ("Waiting for")
 		myLCD.write(lcdMessage)
-		myLCD.setCursor(0,1)
+		myLCD.setCursor(1,0)
 		lcdMessage2 = "a card . . ."
 		myLCD.write(lcdMessage2)
 		myLCD.clear()
