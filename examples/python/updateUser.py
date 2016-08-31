@@ -62,29 +62,30 @@ while (1):
 		cur = con.cursor()
 		cur.execute("SELECT * FROM PERMISSIONS where ID = ?", [rfidNumber])
 		result = cur.fetchone()
-		print ("This RFID is registered for: " + result[0])
-		if result is not None:
-			sel = raw_input("What would you like to update for this user?")
-			if sel == 'Name':
-			 name = raw_input("What is the new name?")
-		  	 params = name, rfidNumber
-			 cur.execute("UPDATE PERMISSIONS SET Name = ? WHERE ID = ?", params)
-			if sel == 'Laser':
-			  laser = raw_input("Y or N for Laser Cutter?")
-			  params = laser, rfidNumber
-			  cur.execute("UPDATE PERMISSIONS SET Laser = ? WHERE ID = ?", params)
-			if sel == 'Printer':
-		  	 printer = raw_input("Y or N for 3-D Printer?")
-			 params = printer, rfidNumber
-			 cur.execute("UPDATE PERMISSIONS SET Printer = ? WHERE ID = ?", params)
-			if sel == 'Solder':
-			 solder = raw_input("Y or N for Soldering Machine?")
-			 params = solder, rfidNumber
-			 cur.execute("UPDATE PERMISSIONS SET Solder = ? WHERE ID = ?", params)
-			con.commit()
-			con.close()
-			blueLED.off()
-			sys.exit(0)
+		try:
+			print ("This RFID is registered for: " + result[1])
+			if result is not None:
+				sel = raw_input("What would you like to update for this user?")
+				if sel == 'Name':
+			 		name = raw_input("What is the new name?")
+		  	 		params = name, rfidNumber
+			 		cur.execute("UPDATE PERMISSIONS SET Name = ? WHERE ID = ?", params)
+				if sel == 'Laser':
+					laser = raw_input("Y or N for Laser Cutter?")
+					params = laser, rfidNumber
+			  		cur.execute("UPDATE PERMISSIONS SET Laser = ? WHERE ID = ?", params)
+				if sel == 'Printer':
+		  	 		printer = raw_input("Y or N for 3-D Printer?")
+			 		params = printer, rfidNumber
+			 		cur.execute("UPDATE PERMISSIONS SET Printer = ? WHERE ID = ?", params)
+				if sel == 'Solder':
+					solder = raw_input("Y or N for Soldering Machine?")
+			 		params = solder, rfidNumber
+			 		cur.execute("UPDATE PERMISSIONS SET Solder = ? WHERE ID = ?", params)
+				con.commit()
+				con.close()
+				blueLED.off()
+				sys.exit(0)
 		else:
 			print("RFID is not registered")
 	else:
