@@ -18,6 +18,9 @@ redLED = grove.GroveLed(RED_LED)
 myLCD = lcd.Lcm1602(13,12,11,10,9,8)
 lcdMessage = " "
 
+relay = grove.GroveRelay(7)
+relay.off()
+
 con = lite.connect('makerspace.db')
 
 blueLED.on()
