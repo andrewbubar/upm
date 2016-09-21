@@ -41,6 +41,10 @@ def SIGINTHandler(signum, frame):
 # This lets you run code on exit
 def exitHandler():
 	print "Exiting"
+	myLCD.clear()
+	greenLED.off()
+	blueLED.off()
+	redLED.off()
 	sys.exit(0)
 
 def checkTable(rfidNumber):
@@ -81,7 +85,6 @@ def cutter(laser):
             myLCD.write(lcdMessage)
             time.sleep(2)
             myLCD.clear()
-            greenLED.off()
         else:
             redLED.on()
             lcdMessage = "Access Denied"
@@ -91,6 +94,23 @@ def cutter(laser):
             myLCD.clear()
             redLED.off()
             # keep machine off
+def cardCheck():
+	for i in range(7):
+		uid.__setitem__(i, 0)
+	if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
+                                      uid, uidSize, 2000)):
+		# found a card
+		rfidData = []
+		for i in range(uidSize.__getitem__(0)):
+			rfidData.insert(i,uid.__getitem__(i))
+		newRfidNumber = ''
+		for i in range(len(rfidData)):
+			newRfidNumber = str(newRfidNumber) + str(rfidData[i])
+		return newRfidNumber
+	else:
+		newRfidNumber = '000000000'
+		return newRfidNumber
+	
 
 # Register exit handlers
 atexit.register(exitHandler)
@@ -135,11 +155,25 @@ while (1):
 			rfidNumber = str(rfidNumber) + str(rfidData[i])
 		try:
 			name, laser, printer, solder = checkTable(rfidNumber)
-			cutter(laser)
+			access = cutter(laser)
+			if access == True:
+				b = 1
+				while (b == 1):
+					newRfidNumber = cardCheck()
+					time.sleep(1)
+					if newRfidNumber == rfidNumber:
+						lcdMessage = "Have Fun Cutting"
+						myLCD.setCursor(0,0)
+						myLCD.write(lcdMessage)
+						time.sleep(1)
+					else:
+						myLCD.clear()
+						b = 2
+				
 		except:
-			time.sleep(1)
-			continue
+			break
 	else:
+                greenLED.off()
                 lcdMessage = "Waiting for a"
                 lcdMessage2 = "card . . .")
                 myLCD.setCursor(0,0)
