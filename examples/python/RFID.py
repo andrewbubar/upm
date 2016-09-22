@@ -110,6 +110,36 @@ def cardCheck():
 	else:
 		newRfidNumber = '000000000'
 		return newRfidNumber
+		
+def waiting():
+	greenLED.off()
+	redLED.off()
+        lcdMessage = "Waiting for a"
+        lcdMessage2 = "card . . .")
+        myLCD.setCursor(0,0)
+        myLCD.write(lcdMessage)
+        myLCD.setCursor(1,0)
+        myLCD.write(lcdMessage2)
+        time.sleep(2)
+        myLCD.clear()
+        
+def writeLCD2Line(message, message2, cursor, cursor2, sleep):
+	myLCD.clear()
+	myLCD.setCursor(cursor)
+	myLCD.write(message)
+	myLCD.setCursor(cursor2)
+	myLCD.write(message2)
+	time.sleep(sleep)
+
+def writeLCD1Line(message, cursor, sleep):
+	myLCD.clear()
+	myLCD.setCursor(cursor)
+	myLCD.write(message)
+	time.sleep(sleep)
+	
+def sendData(ID, name, startTime, endTime):
+	cur = con.cursor()
+	
 	
 
 # Register exit handlers
@@ -181,32 +211,5 @@ while (1):
 						myLCD.write(lcdMesaage2)
 						continue
 						
-						
-'''			
-			if access == True:
-				b = 1
-				while (b == 1):
-					newRfidNumber = cardCheck()
-					time.sleep(1)
-					if newRfidNumber == rfidNumber:
-						lcdMessage = "Have Fun Cutting"
-						myLCD.setCursor(0,0)
-						myLCD.write(lcdMessage)
-						time.sleep(1)
-					else:
-						myLCD.clear()
-						b = 2
-				
-		except:
-			break
-'''
 	else:
-                greenLED.off()
-                lcdMessage = "Waiting for a"
-                lcdMessage2 = "card . . .")
-                myLCD.setCursor(0,0)
-                myLCD.write(lcdMessage)
-                myLCD.setCursor(1,0)
-                myLCD.write(lcdMessage2)
-                time.sleep(2)
-                myLCD.clear()
+		waiting()
