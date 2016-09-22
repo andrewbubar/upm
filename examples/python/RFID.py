@@ -139,6 +139,8 @@ def writeLCD1Line(message, cursor, sleep):
 	
 def sendData(ID, name, startTime, endTime):
 	cur = con.cursor()
+	values = ID, name, startTime, endTime
+	cur.exectuemany("INSERT INTO USED VALUES(?,?,?,?)", values)
 	
 	
 
