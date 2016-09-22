@@ -155,7 +155,34 @@ while (1):
 			rfidNumber = str(rfidNumber) + str(rfidData[i])
 		try:
 			name, laser, printer, solder = checkTable(rfidNumber)
-			access = cutter(laser)
+			cutter(laser) # laser is on
+			while (1):
+				newRfidNumber = cardCheck()
+				if newRfidNumber == rfidNumber:
+					myLCD.clear()
+					lcdMessage = "Have fun cutting"
+					myLCD.setCursor(0,0)
+					myLCD.write(lcdMessage)
+					time.sleep(1)
+					continue
+				else:
+					num = 60
+					while num > 0:
+						newRfidNumber = cardCheck()
+						if newRfidNumber == rfidNumber:
+							break
+						num = num - 1
+						myLCD.clear()
+						lcdMessage = "Place card or"
+						lcdMessage2 = "%s sec left" %num
+						myLCD.setCursor(0,0)  
+						myLCD.write(lcdMessage)
+						myLCD.setCursor(1,0)
+						myLCD.write(lcdMesaage2)
+						continue
+						
+						
+'''			
 			if access == True:
 				b = 1
 				while (b == 1):
@@ -172,6 +199,7 @@ while (1):
 				
 		except:
 			break
+'''
 	else:
                 greenLED.off()
                 lcdMessage = "Waiting for a"
