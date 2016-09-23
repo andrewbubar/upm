@@ -190,6 +190,7 @@ while (1):
 			rfidNumber = str(rfidNumber) + str(rfidData[i])
 		try:
 			name, laser, printer, solder = checkTable(rfidNumber)
+			startTime = str(datetime.datetime.today())
 			cutter(laser) # laser is on
 			while (1):
 				newRfidNumber = cardCheck()
@@ -214,10 +215,16 @@ while (1):
 						myLCD.write(lcdMessage)
 						myLCD.setCursor(1,0)
 						myLCD.write(lcdMesaage2)
-						if num == 1:
-							endTime = datetime.datetime.today()
+						if num == 0:
+							endTime = str(datetime.datetime.today())
+							values = [rfidNumber, name, startTime, endTime]
+							cur.execute("INSERT INTO USED VALUES(?,?,?,?)", values)
+							con.commit()
 							sendData(rfidNumber, name, startTime, endTime)
 						continue
+					break
+				except:
+					break
 						
 	else:
 		waiting()
