@@ -6,6 +6,7 @@ import pyupm_pn532 as upmPn532
 import sqlite3 as lite
 import pyupm_grove as grove
 import pyupm_i2clcd as lcd
+import datetime
 
 BLUE_LED = 4
 RED_LED = 5
@@ -85,6 +86,7 @@ def cutter(laser):
             myLCD.write(lcdMessage)
             time.sleep(2)
             myLCD.clear()
+            startTime = datetime.datetime.today()
         else:
             redLED.on()
             lcdMessage = "Access Denied"
@@ -211,6 +213,9 @@ while (1):
 						myLCD.write(lcdMessage)
 						myLCD.setCursor(1,0)
 						myLCD.write(lcdMesaage2)
+						if num == 1:
+							endTime = datetime.datetime.today()
+							sendData(rfidNumber, name, startTime, endTime)
 						continue
 						
 	else:
