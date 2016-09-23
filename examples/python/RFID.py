@@ -23,6 +23,7 @@ relay = grove.GroveRelay(7)
 relay.off()
 
 con = lite.connect('makerspace.db')
+cur = con.cursor()
 
 blueLED.on()
 
@@ -141,9 +142,9 @@ def writeLCD1Line(message, cursor, sleep):
 	
 def sendData(ID, name, startTime, endTime):
 	cur = con.cursor()
-	values = ID, name, startTime, endTime
-	cur.exectuemany("INSERT INTO USED VALUES(?,?,?,?)", values)
-	
+	values = [ID, name, startTime, endTime]
+	cur.exectue("INSERT INTO USED VALUES(?,?,?,?)", values)
+	con.commit()
 	
 
 # Register exit handlers
