@@ -158,6 +158,11 @@ def sendData(ID, name, startTime, endTime):
 	cur.execute("INSERT INTO USED VALUES(?,?,?,?)", values)
 	con.commit()
 	
+	
+if (not myNFC.init()):
+	print "init() failed"
+	sys.exit(0)
+	
 atexit.register(exitHandler)
 signal.signal(signal.SIGINT, SIGINTHandler)
 
