@@ -53,9 +53,9 @@ def exitHandler():
 def waiting():
 	greenLED.off()
 	redLED.off()
-  lcdMessage = "Waiting for a"
-  lcdMessage2 = "card . . .")
-  myLCD.setCursor(0,0)
+  	lcdMessage = "Waiting for a"
+  	lcdMessage2 = "card . . .")
+  	myLCD.setCursor(0,0)
 	myLCD.write(lcdMessage)
 	myLCD.setCursor(1,0)
 	myLCD.write(lcdMessage2)
@@ -87,8 +87,8 @@ def fromTable(number):
 		cur.exectue("SELECT * FROM PERMISSIONS WHERE ID = ?", [number])
 		result = cur.fetchone()
 		name = result[1]
-    name = name.encode("utf-8")
-    first, last = name.split()
+    		name = name.encode("utf-8")
+    		first, last = name.split()
 		laser = result[2]
 		printer = result[3]
 		solder = result[4]
@@ -102,20 +102,20 @@ def fromTable(number):
 def machine(device):
 	if device == 'Y' or 'y':
 		greenLED.on()
-    lcdMessage = "Access Granted"
-    myLCD.setCursor(0,0)
-    myLCD.write(lcdMessage)
-    time.sleep(1)
-    myLCD.clear()
+    		lcdMessage = "Access Granted"
+    		myLCD.setCursor(0,0)
+    		myLCD.write(lcdMessage)
+    		time.sleep(1)
+    		myLCD.clear()
 		return True
 	else:
 		redLED.on()
-    lcdMessage = "Access Denied"
-    myLCD.setCursor(0,0)
-    myLCD.write(lcdMessage)
-    time.sleep(1)
-    myLCD.clear()
-    redLED.off()
+    		lcdMessage = "Access Denied"
+    		myLCD.setCursor(0,0)
+    		myLCD.write(lcdMessage)
+    		time.sleep(1)
+    		myLCD.clear()
+    		redLED.off()
 		return False
 
 def keepMachineOn():
@@ -128,7 +128,7 @@ def countdown(number):
 	num = 10
 	while num > 0:
 		if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
-                                              ``  uid, uidSize, 2000)):
+					      uid, uidSize, 2000)):
 			newRfidNumber = getRFID()
 			if newRfidNumber == number:
 				return True
@@ -142,6 +142,7 @@ def countdown(number):
 				myLCD.setCursor(1,0)
 				myLCD.write(lcdMessage2)
 		else:
+			num = num - 1
 			myLCD.clear()
 			lcdMessage = "Place same card"
 			lcdMessage2 = " or %s sec left" %num
@@ -161,21 +162,21 @@ def sendData(ID, name, startTime, endTime):
 while (1):
   for i in range(7):
     uid.__setitem__(i,0)
-  if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
+	if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
                                                 uid, uidSize, 2000)):
-    rfidNumber = getRFID()
-    checkTable(rfidNumber)
-    if True:
-      name, laser, printer, solder = fromTable(rfidNumber)
-      machine(laser)
+		rfidNumber = getRFID()
+		checkTable(rfidNumber)
+		if True:
+			name, laser, printer, solder = fromTable(rfidNumber)
+      			machine(laser)
 			if True:
-      	startTime = str(datetime.datetime.today())
-      	while(1):
-        	if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
-          	                                            uid, uidSize, 2000)):
-          	newRfidNumber = getRfid()
-          	if newRfidNumber == rfidNumber:
-            	keepMachineOn()
+      				startTime = str(datetime.datetime.today())
+      				while(1):
+        				if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
+								      uid, uidSize, 2000)):
+          					newRfidNumber = getRfid()
+          					if newRfidNumber == rfidNumber:
+            						keepMachineOn()
 						else:
 							countdown(rfidNumber)
 					else:
@@ -184,5 +185,5 @@ while (1):
 					endTime = str(datetime.datetime.today())
 					sendData(rfidNumber, name, startTime, endTime)
 							
-   else:
-     waiting()
+	else:
+     		waiting()
