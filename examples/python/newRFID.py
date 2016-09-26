@@ -47,6 +47,7 @@ def exitHandler():
 	greenLED.off()
 	blueLED.off()
 	redLED.off()
+	con.close()
 	sys.exit(0)
 
 def waiting():
@@ -123,7 +124,7 @@ def keepMachineOn():
 	myLCD.setCursor(0,0)
 	myLCD.write(lcdMessage)
 
-def wrongCard(number):
+def countdown(number):
 	num = 10
 	while num > 0:
 		if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
@@ -133,6 +134,13 @@ def wrongCard(number):
 				return True
 			else:
 				num = num - 1
+				myLCD.clear()
+				lcdMessage = "Place same card"
+				lcdMessage2 = " or %s sec left" %num
+				myLCD.setCursor(0,0)
+				myLCD.write(lcdMessage)
+				myLCD.setCursor(1,0)
+				myLCD.write(lcdMessage2)
 		else:
 			myLCD.clear()
 			lcdMessage = "Place same card"
@@ -143,7 +151,11 @@ def wrongCard(number):
 			myLCD.write(lcdMessage2)
 	else:
 		return False
-				
+		
+def sendData(ID, name, startTime, endTime):
+	values = [ID, name, startTime, endTime]
+	cur.execute("INSERT INTO USED VALUES(?,?,?,?)", values)
+	con.commit()
 	
 	
 while (1):
@@ -165,9 +177,12 @@ while (1):
           	if newRfidNumber == rfidNumber:
             	keepMachineOn()
 						else:
-							wrongCard(rfidNumber)
+							countdown(rfidNumber)
 					else:
-						countdown()
+						countdown(rfidNumber)
+				else:
+					endTime = str(datetime.datetime.today())
+					sendData(rfidNumber, name, startTime, endTime)
 							
    else:
      waiting()
