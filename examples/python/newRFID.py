@@ -206,6 +206,7 @@ while (1):
 						print "outer countdown"
 						countdown(rfidNumber)
 				#else:
+				print "outside while loop"
 				endTime = str(datetime.datetime.today())
 				sendData(rfidNumber, name, startTime, endTime)
 							
