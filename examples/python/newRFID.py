@@ -199,9 +199,9 @@ while (1):
 						print "got RFID"
           					if newRfidNumber == rfidNumber:
             						keepMachineOn()
-						#else:
-						#	countdown(rfidNumber)
-						#	print "inner countdown"
+						else:
+							print "inner countdown"
+							countdown(rfidNumber)
 					else:
 						print "outer countdown"
 						countdown(rfidNumber)
