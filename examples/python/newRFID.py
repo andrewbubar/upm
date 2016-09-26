@@ -156,14 +156,14 @@ def countdown(number):
 			myLCD.setCursor(1,0)
 			myLCD.write(lcdMessage2)
 	else:
-		print "countdown return False"
+		#print "countdown return False"
 		return False
 		
 def sendData(ID, name, startTime, endTime):
 	values = [ID, name, startTime, endTime]
 	cur.execute("INSERT INTO USED VALUES(?,?,?,?)", values)
 	con.commit()
-	print "data sent"
+	#print "data sent"
 	
 	
 if (not myNFC.init()):
@@ -191,33 +191,33 @@ while (1):
 		checkTable(rfidNumber)
 		globalTF = True
 		if True:
-			print "RFID is registered"
+			#print "RFID is registered"
 			name, laser, printer, solder = fromTable(rfidNumber)
       			machine(laser)
 			if True:
-      				print "start timne"
+      				#print "start timne"
 				startTime = str(datetime.datetime.today())
 				globalTF = True
       				while(globalTF == True):
-        				print "machine is on"
+        				#print "machine is on"
 					if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
 								      uid, uidSize, 2000)):
           					newRfidNumber = getRFID()
-						print "got RFID"
+						#print "got RFID"
           					if newRfidNumber == rfidNumber:
             						keepMachineOn()
 						else:
-							print "inner countdown"
+							#print "inner countdown"
 							globalTF = countdown(rfidNumber)
 					else:
-						print "outer countdown"
+						#print "outer countdown"
 						globalTF = countdown(rfidNumber)
 				#else:
-				print "outside while loop"
+				#print "outside while loop"
 				relay.off()
 				endTime = str(datetime.datetime.today())
 				sendData(rfidNumber, name, startTime, endTime)
 							
 	else:
      		waiting()
-		print "waiting"
+		#print "waiting"
