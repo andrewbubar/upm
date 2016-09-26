@@ -10,7 +10,7 @@ with con:
   cur = con.cursor()
   cur.execute("DROP TABLE IF EXISTS USED")
   cur.execute("CREATE TABLE USED(ID TEXT, Name TEXT, TimeStart BLOB, TimeStop BLOB)")
-  cur.executemany("INSERT INTO USED VALUES(?,?,?,?)", test)
+  cur.execute("INSERT INTO USED VALUES(?,?,?,?)", test)
 
 con.commit()
 con.close()
