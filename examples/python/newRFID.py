@@ -48,6 +48,7 @@ def exitHandler():
 	blueLED.off()
 	redLED.off()
 	con.close()
+	replay.off()
 	sys.exit(0)
 
 def waiting():
@@ -61,6 +62,7 @@ def waiting():
 	myLCD.write(lcdMessage2)
 	time.sleep(2)
 	myLCD.clear()
+	relay.off()
 
 def getRFID():
 	rfidData = []
@@ -105,6 +107,7 @@ def machine(device):
     		myLCD.write(lcdMessage)
     		time.sleep(1)
     		myLCD.clear()
+		relay.on()
 		return True
 	else:
 		redLED.on()
@@ -114,6 +117,7 @@ def machine(device):
     		time.sleep(1)
     		myLCD.clear()
     		redLED.off()
+		relay.off()
 		return False
 
 def keepMachineOn():
@@ -210,6 +214,7 @@ while (1):
 						globalTF = countdown(rfidNumber)
 				#else:
 				print "outside while loop"
+				relay.off()
 				endTime = str(datetime.datetime.today())
 				sendData(rfidNumber, name, startTime, endTime)
 							
