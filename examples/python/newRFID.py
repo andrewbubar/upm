@@ -158,6 +158,17 @@ def sendData(ID, name, startTime, endTime):
 	cur.execute("INSERT INTO USED VALUES(?,?,?,?)", values)
 	con.commit()
 	
+atexit.register(exitHandler)
+signal.signal(signal.SIGINT, SIGINTHandler)
+
+# Retry forever
+myNFC.setPassiveActivationRetries(0xff)
+
+myNFC.SAMConfig()
+
+uidSize = upmPn532.uint8Array(0)
+uid = upmPn532.uint8Array(7)
+	
 	
 while (1):
  	for i in range(7):
