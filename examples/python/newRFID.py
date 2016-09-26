@@ -160,8 +160,8 @@ def sendData(ID, name, startTime, endTime):
 	
 	
 while (1):
-  for i in range(7):
-    uid.__setitem__(i,0)
+ 	for i in range(7):
+		uid.__setitem__(i,0)
 	if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
                                                 uid, uidSize, 2000)):
 		rfidNumber = getRFID()
