@@ -54,7 +54,7 @@ def waiting():
 	greenLED.off()
 	redLED.off()
   	lcdMessage = "Waiting for a"
-  	lcdMessage2 = "card . . .")
+  	lcdMessage2 = "card . . ."
   	myLCD.setCursor(0,0)
 	myLCD.write(lcdMessage)
 	myLCD.setCursor(1,0)
