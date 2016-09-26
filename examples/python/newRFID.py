@@ -188,7 +188,7 @@ while (1):
       				while(1):
         				if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
 								      uid, uidSize, 2000)):
-          					newRfidNumber = getRfid()
+          					newRfidNumber = getRFID()
           					if newRfidNumber == rfidNumber:
             						keepMachineOn()
 						else:
