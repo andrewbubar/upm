@@ -191,7 +191,7 @@ while (1):
 			if True:
       				print "start timne"
 				startTime = str(datetime.datetime.today())
-      				while(True):
+      				while(globalTF == True):
         				print "machine is on"
 					if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
 								      uid, uidSize, 2000)):
@@ -201,10 +201,10 @@ while (1):
             						keepMachineOn()
 						else:
 							print "inner countdown"
-							countdown(rfidNumber)
+							globalTF = countdown(rfidNumber)
 					else:
 						print "outer countdown"
-						countdown(rfidNumber)
+						globalTF = countdown(rfidNumber)
 				#else:
 				print "outside while loop"
 				endTime = str(datetime.datetime.today())
