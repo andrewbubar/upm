@@ -121,6 +121,7 @@ def keepMachineOn():
 	lcdMessage = "Have fun cutting"
 	myLCD.setCursor(0,0)
 	myLCD.write(lcdMessage)
+	time.sleep(5)
 
 def countdown(number):
 	num = 10
@@ -149,12 +150,14 @@ def countdown(number):
 			myLCD.setCursor(1,0)
 			myLCD.write(lcdMessage2)
 	else:
+		print "countdown return False"
 		return False
 		
 def sendData(ID, name, startTime, endTime):
 	values = [ID, name, startTime, endTime]
 	cur.execute("INSERT INTO USED VALUES(?,?,?,?)", values)
 	con.commit()
+	print "data sent"
 	
 	
 if (not myNFC.init()):
