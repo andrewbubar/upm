@@ -84,7 +84,7 @@ def checkTable(number):
 
 def fromTable(number):
 	if len(number) > 0:
-		cur.exectue("SELECT * FROM PERMISSIONS WHERE ID = ?", [number])
+		cur.execute("SELECT * FROM PERMISSIONS WHERE ID = ?", [number])
 		result = cur.fetchone()
 		name = result[1]
     		name = name.encode("utf-8")
