@@ -69,10 +69,8 @@ def getRFID():
 	rfidNumber = ''
 	for i in range(len(rfidData)):
 		rfidNumber = str(rfidNumber) + str(rfidData[i])
-		return rfidNumber
-	else:
-		newRfidNumber = '000000000'
-		return rfidNumber
+	return rfidNumber
+
 
 def checkTable(number):
 	if len(number) > 0:
