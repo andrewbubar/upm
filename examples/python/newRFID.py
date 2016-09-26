@@ -141,6 +141,7 @@ def countdown(number):
 				myLCD.write(lcdMessage)
 				myLCD.setCursor(1,0)
 				myLCD.write(lcdMessage2)
+				time.sleep(1)
 		else:
 			num = num - 1
 			myLCD.clear()
@@ -184,6 +185,7 @@ while (1):
                                                 uid, uidSize, 2000)):
 		rfidNumber = getRFID()
 		checkTable(rfidNumber)
+		globalTF = True
 		if True:
 			print "RFID is registered"
 			name, laser, printer, solder = fromTable(rfidNumber)
@@ -191,6 +193,7 @@ while (1):
 			if True:
       				print "start timne"
 				startTime = str(datetime.datetime.today())
+				globalTF = True
       				while(globalTF == True):
         				print "machine is on"
 					if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
