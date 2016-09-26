@@ -188,7 +188,7 @@ while (1):
       			machine(laser)
 			if True:
       				startTime = str(datetime.datetime.today())
-      				while(1):
+      				while(True):
         				if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
 								      uid, uidSize, 2000)):
           					newRfidNumber = getRFID()
@@ -196,11 +196,14 @@ while (1):
             						keepMachineOn()
 						else:
 							countdown(rfidNumber)
+							print "inner countdown"
 					else:
 						countdown(rfidNumber)
+						print "outer countdown"
 				else:
 					endTime = str(datetime.datetime.today())
 					sendData(rfidNumber, name, startTime, endTime)
 							
 	else:
      		waiting()
+		print "waiting"
