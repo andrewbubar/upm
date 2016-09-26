@@ -78,6 +78,7 @@ def checkTable(rfidNumber):
                 myLCD.write(lcdMessage2)
                 time.sleep(2)
                 myLCD.clear()
+		return False
 def cutter(laser):
     
         if laser == 'Y' or laser == 'y':
