@@ -130,6 +130,7 @@ def countdown(number):
 					      uid, uidSize, 2000)):
 			newRfidNumber = getRFID()
 			if newRfidNumber == number:
+				print "countdown return true"
 				return True
 			else:
 				num = num - 1
@@ -184,22 +185,26 @@ while (1):
 		rfidNumber = getRFID()
 		checkTable(rfidNumber)
 		if True:
+			print "RFID is registered"
 			name, laser, printer, solder = fromTable(rfidNumber)
       			machine(laser)
 			if True:
-      				startTime = str(datetime.datetime.today())
+      				print "start timne"
+				startTime = str(datetime.datetime.today())
       				while(True):
-        				if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
+        				print "machine is on"
+					if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
 								      uid, uidSize, 2000)):
           					newRfidNumber = getRFID()
+						print "got RFID"
           					if newRfidNumber == rfidNumber:
             						keepMachineOn()
-						else:
-							countdown(rfidNumber)
-							print "inner countdown"
+						#else:
+						#	countdown(rfidNumber)
+						#	print "inner countdown"
 					else:
-						countdown(rfidNumber)
 						print "outer countdown"
+						countdown(rfidNumber)
 				else:
 					endTime = str(datetime.datetime.today())
 					sendData(rfidNumber, name, startTime, endTime)
