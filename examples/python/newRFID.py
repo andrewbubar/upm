@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # Authors: Andrew Bubar & Hunter Pickett, but mostly Andrew and the internet
 
+# import necessary modules
 import time, sys, signal, atexit
 import pyupm_pn532 as upmPn532
 import sqlite3 as lite
@@ -8,27 +9,31 @@ import pyupm_grove as grove
 import pyupm_i2clcd as lcd
 import datetime
 
+# declare LED pins
 BLUE_LED = 4
 RED_LED = 5
 GREEN_LED = 6
 
+# initialize LEDs
 greenLED = grove.GroveLed(GREEN_LED)
 blueLED = grove.GroveLed(BLUE_LED)
 redLED = grove.GroveLed(RED_LED)
 
+# initialize LCD
 myLCD = lcd.Lcm1602(13,12,11,10,9,8)
 lcdMessage = " "
 
+# initialize power relay
 relay = grove.GroveRelay(7)
 relay.off()
 
+# connect to database and set cursor
 con = lite.connect('makerspace.db')
 cur = con.cursor()
 
-blueLED.on()
+blueLED.on() # turn on blue LED
 
-# Instantiate an PN532 on I2C bus 0 (default) using gpio 3 for the
-# IRQ, and gpio 2 for the reset pin.
+# set IRQ, RST, I2C bus, ADDR and initialize RFID reader
 IRQ = 3
 RST = 2
 PN532_I2C_BUS = 6
@@ -51,6 +56,7 @@ def exitHandler():
 	replay.off()
 	sys.exit(0)
 
+# when no RFID card is scanned
 def waiting():
 	greenLED.off()
 	redLED.off()
