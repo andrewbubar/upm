@@ -195,7 +195,6 @@ while (1):
                                                 uid, uidSize, 2000)):
 		rfidNumber = getRFID()
 		checkTable(rfidNumber)
-		globalTF = True
 		if True:
 			#print "RFID is registered"
 			name, laser, printer, solder = fromTable(rfidNumber)
