@@ -16,6 +16,7 @@ myLCD = lcd.Lcm1602(13,12,11,10,9,8)
 lcdMessage = " "
 
 con = lite.connect('makerspace.db')
+cur = con.cursor()
 
 blueLED.on()
 
@@ -52,15 +53,40 @@ while (1):
 		uid.__setitem__(i, 0)
 	if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
                                       uid, uidSize, 2000)):
-		# found a card
-		rfidData = []
-		for i in range(uidSize.__getitem__(0)):
-			rfidData.insert(i,uid.__getitem__(i))
-		rfidNumber = ''
-		for i in range(len(rfidData)):
-			rfidNumber = str(rfidNumber) + str(rfidData[i])
-		cur = con.cursor()
-		cur.execute("SELECT * FROM PERMISSIONS where ID = ?", [rfidNumber])
+		rfidNumber = getRFID()
+		checkTable(rfidNumber)
+		if True:
+			name, laser, printer, solder = fromTable(rfidNumber)
+			print ("This RFID is registered for: " + name)
+			print ("Laser Access: " + laser)
+			print ("3D Printer Access: " + printer)
+			print ("Solder Access: " + solder)
+			question = 'Yes'
+			while question == 'Yes':
+				sel = raw_input("What would you like to update for this user? (Name, Laser, 3D Printer, or Solder)")
+				if sel == 'Name':
+					name = raw_input("What is the new name? ")
+					params = name, rfidNumber
+					cur.execute("UPDATE PERMISSIONS SET Name = ? WHERE ID = ?", params)
+				elif sel == 'Laser':
+					laser = raw_input("Y or N for Laser Cutter? ")
+					params = laser, rfidNumber
+					cur.execute("UPDATE PERMISSIONS SET Laser = ? WHERE ID = ?", params)
+				elif sel == '3D Printer':
+					printer = raw_input("Y or N for 3D Printer? ")
+					params = printer, rfidNumber
+					cur.execute("UPDATE PERMISSIONS SET Printer = ? WHERE ID = ?", params)
+				elif sel == 'Solder':
+					solder = raw_input("Y or N for Solder? ")
+					params = solder, rfidNumber
+					cur.execute("UPDATE PERMISSIONS SET Solder = ? WHERE ID = ?", params)
+				question = raw_input("Would you like to update another machine? (Yes or No)")
+			con.commit()
+			con.close()
+			blueLED.off()
+			sys.exit(0)
+		else:
+			print ("RFID is not registered")
 		result = cur.fetchone()
 		try:
 			print ("This RFID is registered for: " + result[1])
@@ -89,4 +115,4 @@ while (1):
 		except:
 			print ("RFID is not registered")
 	else:
-		print "Waiting for a card...\n"
+		waiting()
