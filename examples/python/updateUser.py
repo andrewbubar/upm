@@ -1,9 +1,9 @@
 import time, sys, signal, atexit
 import sqlite3 as lite
 import pyupm_pn532 as upmPn532
-import pyupm_grove as grove
-import pyupm_i2clcd as lcd
-
+#import pyupm_grove as grove
+#import pyupm_i2clcd as lcd
+'''
 BLUE_LED = 4
 RED_LED = 5
 GREEN_LED = 6
@@ -12,13 +12,14 @@ greenLED = grove.GroveLed(GREEN_LED)
 blueLED = grove.GroveLed(BLUE_LED)
 redLED = grove.GroveLed(RED_LED)
 
-#myLCD = lcd.Lcm1602(13,12,11,10,9,8)
-#lcdMessage = " "
+myLCD = lcd.Lcm1602(13,12,11,10,9,8)
+lcdMessage = " "
+'''
 
 con = lite.connect('makerspace.db')
 cur = con.cursor()
 
-blueLED.on()
+#blueLED.on()
 
 IRQ = 3
 RST = 2
@@ -31,18 +32,20 @@ def SIGINTHandler(signum, frame):
 
 def exitHandler():
 	print "Exiting"
-	#myLCD.clear()
+	'''
+	myLCD.clear()
 	greenLED.off()
 	blueLED.off()
 	redLED.off()
+	'''
 	con.close()
 	sys.exit(0)
 	
 def waiting():
-	greenLED.off()
-	redLED.off()
 	print ("Waiting for a card")
 	'''
+	greenLED.off()
+	redLED.off()
   	lcdMessage = "Waiting for a"
   	lcdMessage2 = "card . . ."
   	myLCD.setCursor(0,0)
@@ -80,11 +83,13 @@ def fromTable(number):
 		laser = result[2]
 		printer = result[3]
 		solder = result[4]
-		#lcdMessage = "Hello " + first + "!"
-		#myLCD.setCursor(0,0)
-		#myLCD.write(lcdMessage)
-		#time.sleep(1)
-		#myLCD.clear()
+		'''
+		lcdMessage = "Hello " + first + "!"
+		myLCD.setCursor(0,0)
+		myLCD.write(lcdMessage)
+		time.sleep(1)
+		myLCD.clear()
+		'''
 		return name, laser, printer, solder
 	
 def displayRFID(name, laser, printer, solder):
