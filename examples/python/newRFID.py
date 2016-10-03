@@ -53,7 +53,7 @@ def exitHandler():
 	blueLED.off()
 	redLED.off()
 	con.close()
-	replay.off()
+	relay.off()
 	sys.exit(0)
 
 # when no RFID card is scanned
