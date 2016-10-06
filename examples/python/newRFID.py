@@ -106,7 +106,7 @@ def fromTable(number):
 		return name, laser, printer, solder
 
 def machine(device):
-	if device == 'Y' or 'y':
+	if device == 'Y' or device == 'y':
 		greenLED.on()
     		lcdMessage = "Access Granted"
     		myLCD.setCursor(0,0)
@@ -140,7 +140,7 @@ def countdown(number):
 					      uid, uidSize, 2000)):
 			newRfidNumber = getRFID()
 			if newRfidNumber == number:
-				print "countdown return true"
+				#print "countdown return true"
 				return True
 			else:
 				num = num - 1
@@ -170,6 +170,17 @@ def sendData(ID, name, startTime, endTime):
 	cur.execute("INSERT INTO USED VALUES(?,?,?,?)", values)
 	con.commit()
 	#print "data sent"
+
+def notRegistered():
+	myLCD.clear()
+	lcdMessage = "RFID not"
+	lcdMessage2 = "registered"
+	myLCD.setCursor(0,0)
+	myLCD.write(lcdMessage)
+	myLCD.setCursor(1,0)
+	myLCD.write(lcdMessage2)
+	time.sleep(1)
+	
 	
 	
 if (not myNFC.init()):
@@ -225,7 +236,7 @@ while (1):
 			else:
 				print "No access"
 		else:
-			print "RFID is not registered"
+			notRegistered()
 	else:
      		waiting()
 		#print "waiting"
