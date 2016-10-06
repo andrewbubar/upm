@@ -68,10 +68,12 @@ def getRFID():
 def checkTable(number):
 	if len(number) > 0:
 		cur.execute("SELECT * FROM PERMISSIONS WHERE ID = ?", [number])
-		if TypeError:
+		result = cur.fetchone()
+		try:
+			if result[0] == number:
+				return True
+		except TypeError:
 			return False
-		else:
-			return True
 		
 def fromTable(number):
 	if len(number) > 0:
