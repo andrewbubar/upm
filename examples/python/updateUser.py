@@ -119,7 +119,7 @@ def updateRFID():
 	question = raw_input("Would you like to update another machine? (Yes or No)")
 	if question == 'Yes':
 		return True
-	else
+	else:
 		return False
 
 	
@@ -144,12 +144,12 @@ while (1):
 	if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
                                       uid, uidSize, 2000)):
 		rfidNumber = getRFID()
-		checkTable(rfidNumber)
-		if True:
+		inDatabase = checkTable(rfidNumber)
+		if inDatabase == True:
 			name, laser, printer, solder = fromTable(rfidNumber)
 			displayRFID(name, laser, printer, solder)
-			TF = True
-			while TF == True:
+			update = True
+			while update == True:
 				TF = updateRFID()
 			con.commit()
 			sys.exit(0)
