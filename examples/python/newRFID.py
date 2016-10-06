@@ -194,16 +194,16 @@ while (1):
 	if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
                                                 uid, uidSize, 2000)):
 		rfidNumber = getRFID()
-		checkTable(rfidNumber)
-		if True:
+		inDatabase = checkTable(rfidNumber)
+		if inDatabase == True:
 			#print "RFID is registered"
 			name, laser, printer, solder = fromTable(rfidNumber)
-      			machine(laser)
-			if True:
+      			access = machine(laser)
+			if access == True:
       				#print "start timne"
 				startTime = str(datetime.datetime.today())
-				globalTF = True
-      				while(globalTF == True):
+				machineOn = True
+      				while(machineOn == True):
         				#print "machine is on"
 					if (myNFC.readPassiveTargetID(upmPn532.PN532.BAUD_MIFARE_ISO14443A,
 								      uid, uidSize, 2000)):
@@ -213,16 +213,19 @@ while (1):
             						keepMachineOn()
 						else:
 							#print "inner countdown"
-							globalTF = countdown(rfidNumber)
+							machineOn = countdown(rfidNumber)
 					else:
 						#print "outer countdown"
-						globalTF = countdown(rfidNumber)
+						machineOn = countdown(rfidNumber)
 				#else:
 				#print "outside while loop"
 				relay.off()
 				endTime = str(datetime.datetime.today())
 				sendData(rfidNumber, name, startTime, endTime)
-							
+			else:
+				print "No access"
+		else:
+			print "RFID is not registered"
 	else:
      		waiting()
 		#print "waiting"
