@@ -152,7 +152,7 @@ while (1):
 			displayRFID(name, laser, printer, solder)
 			update = True
 			while update == True:
-				TF = updateRFID()
+				update = updateRFID()
 			con.commit()
 			sys.exit(0)
 		else:
