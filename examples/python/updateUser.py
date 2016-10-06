@@ -101,7 +101,7 @@ def displayRFID(name, laser, printer, solder):
 	print ("Solder Access: " + solder)
 	
 def updateRFID():
-	sel = raw_input("What would you like to update for this user? (Name, Laser, 3D Printer, or Solder)")
+	sel = raw_input("What would you like to update for this user? (Name, Laser, 3D Printer, or Solder) ")
 	if sel == 'Name':
 		name = raw_input("What is the new name? ")
 		params = name, rfidNumber
@@ -118,7 +118,7 @@ def updateRFID():
 		solder = raw_input("Y or N for Solder? ")
 		params = solder, rfidNumber
 		cur.execute("UPDATE PERMISSIONS SET Solder = ? WHERE ID = ?", params)
-	question = raw_input("Would you like to update another machine? (Yes or No)")
+	question = raw_input("Would you like to update another machine? (Yes or No) ")
 	if question == 'Yes':
 		return True
 	else:
