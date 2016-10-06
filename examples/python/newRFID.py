@@ -83,10 +83,12 @@ def getRFID():
 def checkTable(number):
 	if len(number) > 0:
 		cur.execute("SELECT * FROM PERMISSIONS WHERE ID = ?", [number])
-		if TypeError:
+		result = cur.fetchone()
+		try:
+			if result[0] == number:
+				return True
+		except TypeError:
 			return False
-		else:
-			return True
 
 def fromTable(number):
 	if len(number) > 0:
@@ -180,8 +182,6 @@ def notRegistered():
 	myLCD.setCursor(1,0)
 	myLCD.write(lcdMessage2)
 	time.sleep(1)
-	
-	
 	
 if (not myNFC.init()):
 	print "init() failed"
