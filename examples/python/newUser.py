@@ -2,7 +2,7 @@ import time, sys, signal, atexit
 import sqlite3 as lite
 import pyupm_pn532 as upmPn532
 import pyupm_grove as grove
-import pyupm_i2clcd as lcd
+#import pyupm_i2clcd as lcd
 
 BLUE_LED = 4
 RED_LED = 5
@@ -12,8 +12,8 @@ greenLED = grove.GroveLed(GREEN_LED)
 blueLED = grove.GroveLed(BLUE_LED)
 redLED = grove.GroveLed(RED_LED)
 
-myLCD = lcd.Lcm1602(13,12,11,10,9,8)
-lcdMessage = " "
+#myLCD = lcd.Lcm1602(13,12,11,10,9,8)
+#lcdMessage = " "
 
 con = lite.connect('makerspace.db')
 cur = con.cursor()
@@ -31,12 +31,21 @@ def SIGINTHandler(signum, frame):
 
 def exitHandler():
 	print "Exiting"
-	myLCD.clear()
+#	myLCD.clear()
 	greenLED.off()
 	blueLED.off()
 	redLED.off()
 	con.close()
 	sys.exit(0)
+	
+def getRFID():
+	rfidData = []
+	for i in range(uidSize.__getitem__(0)):
+		rfidData.insert(i,uid.__getitem__(i))
+	rfidNumber = ''
+	for i in range(len(rfidData)):
+		rfidNumber = str(rfidNumber) + str(rfidData[i])
+	return rfidNumber
 
 def registered():
 	'''
