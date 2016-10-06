@@ -138,6 +138,7 @@ myNFC.SAMConfig()
 
 uidSize = upmPn532.uint8Array(0)
 uid = upmPn532.uint8Array(7)
+
 print ("Scan RFID to update")
 
 while (1):
