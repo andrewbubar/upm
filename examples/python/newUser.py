@@ -38,6 +38,9 @@ def exitHandler():
 	con.close()
 	sys.exit(0)
 	
+def waiting():
+	print "Waiting to scan..."
+	
 def getRFID():
 	rfidData = []
 	for i in range(uidSize.__getitem__(0)):
